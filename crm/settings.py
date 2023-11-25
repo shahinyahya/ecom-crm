@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     
     # required apps
-    'leads'
+    'leads.apps.LeadsConfig'
 ]
 
 MIDDLEWARE = [

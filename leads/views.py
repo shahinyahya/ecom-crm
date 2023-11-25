@@ -5,10 +5,19 @@ from leads.models import Lead
 def home_page(request):
     return render(request, 'index.html')
 
-# def lead_list(request):
-
 def leads_page(request):
-    return render(request, 'leads/lead_list.html')
+    leads = Lead.objects.all()
+    context = {
+        "leads": leads
+    }
+    return render(request, 'leads/lead_list.html', context)
+
+def lead_detail(request, pk):
+    lead = Lead.objects.get(id=pk)
+    context = {
+        "lead": lead
+    }
+    return render(request, 'leads/lead_detail.html', context)
 
 def lead_create_form(request):
     form = LeadForm()
@@ -44,4 +53,10 @@ def lead_update(request, pk):
 def lead_delete(request, pk):
     lead = Lead.objects.get(id=pk)
     lead.delete()
-    return redirect('leads/')
+    return redirect('/leads/')
+
+def lead_login(request):
+    return render(request, 'login.html')
+
+def lead_register(request):
+    return render(request, 'signup.html')

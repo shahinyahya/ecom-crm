@@ -1,0 +1,41 @@
+{% extends "../base.html" %}
+{% block content %}
+<section class="text-gray-400 bg-gray-900 body-font pt-40 pb-40">
+    <div class="container mx-auto flex px-5 py-24 items-center justify-center flex-col">
+      {% comment %} <img class="lg:w-2/6 md:w-3/6 w-5/6 mb-10 object-cover object-center rounded" alt="hero" src="https://dummyimage.com/720x600"> {% endcomment %}
+      <div class="text-center lg:w-2/3 w-full">
+        <h1 class="title-font sm:text-4xl text-3xl mb-4 font-medium text-white">Details of {{lead.first_name}} {{lead.last_name}}</h1>
+        <div class="flex flex-col items-center pb-9 pt-9">
+            <div class="flex gap-x-2.5 pb-4">
+                <p>First Name: </p>
+                <span class="text-white text-xl"> {{lead.first_name}} </span>
+            </div>
+            <div class="flex gap-x-2.5 pb-4">
+                <p>Last Name: </p>
+                <span class="text-white text-xl"> {{lead.last_name}} </span>
+            </div>
+            <div class="flex gap-x-2.5 pb-4">
+                <p>Age: </p>
+                <span class="text-white text-xl"> {{lead.age}} </span>
+            </div>
+            <div class="flex gap-x-2.5">
+                <p>Agent/Admin: </p>
+                <span class="text-white text-xl"> {{lead.agent}} </span>
+            </div>
+        </div>
+        <div class="flex justify-center">
+          <button class="inline-flex text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg">
+            <a>
+                Update Lead
+            </a>
+          </button>
+          <button class="ml-4 inline-flex text-gray-400 bg-gray-800 border-0 py-2 px-6 focus:outline-none hover:bg-gray-700 hover:text-white rounded text-lg">
+            <a href="{% url 'leads:lead-list' %}">
+                Go Back
+            </a>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+  {% endblock content %}
