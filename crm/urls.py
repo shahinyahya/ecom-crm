@@ -16,12 +16,13 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from leads.views import home_page, lead_register, lead_login
+from leads.views import home_page, lead_register, lead_login, HomePage
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', home_page, name='home'),
-     path('login/', lead_login, name='lead-login'),
+    # path('', home_page, name='home'),
+    path('login/', lead_login, name='lead-login'),
     path('register/', lead_register, name='lead-register'),
-    path('leads/', include('leads.urls', namespace='leads'))
+    path('leads/', include('leads.urls', namespace='leads')),
+    path('', HomePage.as_view() , name='home'),             # this is based on class based view
 ]

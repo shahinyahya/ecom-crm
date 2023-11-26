@@ -1,6 +1,52 @@
 from django.shortcuts import render, redirect
 from .forms import LeadForm, LeadUpdateForm
 from leads.models import Lead
+from django.views.generic import TemplateView, ListView, DetailView, DeleteView, CreateView, UpdateView
+from django.contrib import messages
+from django.urls import reverse
+
+# Class Based Views..
+class HomePage(TemplateView):
+    template_name = 'index.html'
+
+class LeadListView(ListView):
+    template_name = 'leads/lead_list.html'
+    queryset = Lead.objects.all()
+    context_object_name = 'leads' 
+
+class LeadDetailView(DetailView):      #instead of specifying object_list in html can give custom object_name.
+    template_name = 'leads/lead_detail.html'
+    queryset = Lead.objects.all()
+    context_object_name = 'lead'
+
+class LeadCreateView(CreateView):
+    template_name = 'leads/lead_create.html'
+    form_class = LeadForm
+
+    def get_success_url(self):
+        return reverse('leads:lead-list')
+
+class LeadUpdateView(UpdateView):
+    template_name = 'leads/lead_update.html'
+    queryset = Lead.objects.all()
+    form_class = LeadUpdateForm
+
+    def get_success_url(self):
+        return reverse('leads:lead-list')
+class LeadDeleteView(DeleteView):
+    template_name = 'leads/lead_delete.html'
+    queryset = Lead.objects.all()
+
+    def get_success_url(self):
+        return reverse('leads:lead-list')
+    
+class Login(TemplateView):
+    template_name = 'login.html'
+
+class Register(TemplateView):
+    template_name = 'signup.html'
+
+# Funcitonal Views
 
 def home_page(request):
     return render(request, 'index.html')
