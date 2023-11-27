@@ -38,7 +38,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    
+
+    #custom form styling widget 
+    'widget_tweaks',
+
     # required apps
     'leads.apps.LeadsConfig'
 ]
