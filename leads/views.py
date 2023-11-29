@@ -1,8 +1,8 @@
+from django.core.mail import send_mail
 from django.shortcuts import render, redirect
-from .forms import LeadForm, LeadUpdateForm
+from .forms import LeadForm, LeadUpdateForm, CustomUserCreationForm
 from leads.models import Lead
 from django.views.generic import TemplateView, ListView, DetailView, DeleteView, CreateView, UpdateView
-from django.contrib import messages
 from django.urls import reverse
 
 # Class Based Views..
@@ -25,6 +25,16 @@ class LeadCreateView(CreateView):
 
     def get_success_url(self):
         return reverse('leads:lead-list')
+    
+    def form_valid(self, form):
+        # TODO send email..
+        send_mail(
+            subject='A lead has been created',
+            message='Go to list to see the new lead!',
+            from_email='admin@ecomiti.com',
+            recipient_list=['benna@ecomiti.com']
+        )
+        return super(LeadCreateView, self).form_valid(form)
 
 class LeadUpdateView(UpdateView):
     template_name = 'leads/lead_update.html'
@@ -39,12 +49,20 @@ class LeadDeleteView(DeleteView):
 
     def get_success_url(self):
         return reverse('leads:lead-list')
-    
-class Login(TemplateView):
-    template_name = 'login.html'
 
-class Register(TemplateView):
-    template_name = 'signup.html'
+
+class SignUpView(CreateView):
+    template_name = 'registration/signup.html'
+    form_class = CustomUserCreationForm
+
+    def get_success_url(self):
+        return reverse('lead-login')
+
+# class Login(TemplateView):
+#     template_name = 'auth/login.html'
+
+# class Register(TemplateView):
+#     template_name = 'auth/signup.html'
 
 # Funcitonal Views
 
@@ -101,8 +119,8 @@ def lead_delete(request, pk):
     lead.delete()
     return redirect('/leads/')
 
-def lead_login(request):
-    return render(request, 'login.html')
+# def lead_login(request):
+#     return render(request, 'login.html')
 
-def lead_register(request):
-    return render(request, 'signup.html')
+# def lead_register(request):
+#     return render(request, 'signup.html')
