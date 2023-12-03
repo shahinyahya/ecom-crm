@@ -129,3 +129,4 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 # auth redirect endpoint
 LOGIN_REDIRECT_URL = '/leads'
 LOGOUT_REDIRECT_URL = '/'
+LOGIN_URL = '/login'            #Tetmplate mixin for not authenticated

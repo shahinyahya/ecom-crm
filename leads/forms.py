@@ -2,6 +2,7 @@ from django import forms
 from django.forms import widgets
 from django.contrib.auth.forms import UserCreationForm, UsernameField
 from django.contrib.auth import get_user_model
+from django.contrib.auth.views import PasswordResetView
 from .models import Lead
 
 User = get_user_model()
