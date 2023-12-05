@@ -10,5 +10,6 @@ urlpatterns = [
     path('login/', LoginView.as_view(), name='lead-login'),
     path('logout/', LogoutView.as_view(), name='lead-logout'),
     path('leads/', include('leads.urls', namespace='leads')),
+    path('agents/', include('agents.urls', namespace='agents')),
     path('', HomePage.as_view() , name='home'),             # this is based on class based view
 ]

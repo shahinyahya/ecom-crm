@@ -32,5 +32,7 @@ class LeadUpdateForm(forms.ModelForm):
 class CustomUserCreationForm(UserCreationForm):
     class Meta:
         model = User
-        fields = ("username",)
+        fields = (
+            "username",
+            )
         field_classes = {"username": UsernameField}

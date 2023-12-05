@@ -31,7 +31,8 @@ INSTALLED_APPS = [
     'widget_tweaks',
 
     # required apps
-    'leads.apps.LeadsConfig'
+    'leads.apps.LeadsConfig',
+    'agents.apps.AgentsConfig',
 ]
 
 MIDDLEWARE = [
