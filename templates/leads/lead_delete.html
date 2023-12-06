@@ -7,6 +7,6 @@
             {% csrf_token %}
             {{ form.as_p }}
             <input type="submit" class="text-white bg-red-500 border-0 py-1 px-6 mt-8 focus:outline-none hover:bg-gray-700 hover:text-white rounded cursor-pointer text-lg transition-all" value="Delete">
-			<a href="{% url 'leads:lead-list'%}" class="text-white bg-blue-500 border-0 py-2 px-6 mt-8 focus:outline-none hover:bg-gray-700 hover:text-white rounded text-lg transition-all">Cancel</a>
+			<a href="{% url 'agents:agent-list'%}" class="text-white bg-blue-500 border-0 py-2 px-6 mt-8 focus:outline-none hover:bg-gray-700 hover:text-white rounded text-lg transition-all">Cancel</a>
         </form>
     {% endblock content %}

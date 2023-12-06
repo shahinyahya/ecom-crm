@@ -24,7 +24,7 @@ class Agent(models.Model):
     organistaion = models.ForeignKey(UserProfile, on_delete=models.CASCADE, default=1)
 
     def __str__(self):
-        return f'{self.user.username} -> {self.user.email}'
+        return self.user.username
 
 # Here we actually create user model and connct to post_save that would be available to the Agent.
 def post_user_created_signal(sender, instance, created, **kwargs):
