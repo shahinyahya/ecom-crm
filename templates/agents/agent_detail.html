@@ -16,11 +16,11 @@
             </div>
         </div>
         <div class="flex justify-center">
-          {% comment %} <button class="inline-flex text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg">
-            <a href="{% url 'leads:update-lead' lead.pk %}">
-                Update Lead
+           <button class="inline-flex text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg">
+            <a href="{% url 'agents:agent-update' agent.pk %}">
+                Update Agent
             </a>
-          </button> {% endcomment %}
+          </button> 
           <button class="ml-4 inline-flex text-gray-400 bg-gray-800 border-0 py-2 px-6 focus:outline-none hover:bg-gray-700 hover:text-white rounded text-lg">
             <a href="{% url 'agents:agent-list' %}">
                 Go Back

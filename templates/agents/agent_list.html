@@ -1,10 +1,10 @@
 {% extends "../base.html" %}
     {% block content %}
 
-    <section class="text-gray-400 bg-gray-900 body-font pt-44 pb-40">
+    <section class="text-gray-400 bg-gray-900 body-font pt-40 pb-40">
         <div class="container px-5 py-24 mx-auto">
           <div class="flex flex-col justify-center items-center text-center w-full mb-20">
-            <h1 class="sm:text-3xl text-2xl font-medium title-font mb-4 text-white">My Leads</h1>
+            <h1 class="sm:text-3xl text-2xl font-medium title-font mb-4 text-white">My Agents</h1>
             <p class="lg:w-2/3 mx-auto leading-relaxed text-base">These are the list of customers. Click each customer to get detail.</p>
             <button class="text-white bg-indigo-500 border-0 py-2 px-6 mt-8 focus:outline-none hover:bg-gray-700 hover:text-white rounded text-lg transition-all">
                 <a href="{% url 'agents:agent-create' %}">
@@ -15,22 +15,21 @@
           <div class="flex flex-wrap -m-2">
             {% for agent in agents %}
             {% comment %} {% for lead in object_list  %} {% endcomment %}
-            <div class="p-2 lg:w-1/3 md:w-1/2 w-full">
-                    {% comment %} <a href="{% url 'leads:lead-detail' lead.pk %}"> {% endcomment %}
-                        <div class="h-full flex items-center justify-between border-gray-300 border p-4 rounded-lg group hover:bg-white cursor-pointer transition-all">
-                            {% comment %} <img alt="team" class="w-16 h-16 bg-gray-100 object-cover object-center flex-shrink-0 rounded-full mr-4" src="https://dummyimage.com/80x80"> {% endcomment %}
-                            <div class="flex-grow ">
-                                <h2 class="text-white group-hover:text-black title-font font-medium">{{agent.user.username}}</h2>
-                                {% comment %} <p class="text-gray-600">Age: <span class="text-white group-hover:text-black"> {{ lead.age }} </span></p> {% endcomment %}
-                            </div>
-                            <div class="text-white bg-red-500 border-0 py-2 px-6 mt-8 focus:outline-none hover:bg-gray-700 hover:text-white rounded text-lg transition-all">
-                                <a href="{% url 'agents:agent-delete' agent.pk %}">
-                                    Delete
-                                </a>
-                            </div>
-                        </div>
-                    {% comment %} </a> {% endcomment %}
-            </div>
+            <a href="{% url 'agents:agent-detail' agent.pk %}">
+              <div class="p-2 lg:w-1/3 md:w-1/2 w-full">
+                <div class="h-full flex items-center justify-between border-gray-300 border p-4 rounded-lg group hover:bg-white cursor-pointer transition-all">
+                    <div class="flex-grow ">
+                        <h2 class="text-white group-hover:text-black title-font font-medium">{{agent.user.username}}</h2>
+                        <p class="text-white group-hover:text-black title-font font-medium">{{agent.user.email}}</p>
+                    </div>
+                    <div class="text-white bg-red-500 border-0 py-2 px-6 mt-8 focus:outline-none hover:bg-gray-700 hover:text-white rounded text-lg transition-all">
+                        <a href="{% url 'agents:agent-delete' agent.pk %}">
+                            Delete
+                        </a>
+                    </div>
+                </div>
+              </div>
+            </a>
             {% endfor %}
           </div>
         </div>

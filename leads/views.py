@@ -12,8 +12,8 @@ class HomePage(TemplateView):
 
 class LeadListView(LoginRequiredMixin, ListView):
     template_name = 'leads/lead_list.html'
-    queryset = Lead.objects.all()
     context_object_name = 'leads' 
+    queryset = Lead.objects.all()
 
 class LeadDetailView(LoginRequiredMixin, DetailView):      #instead of specifying object_list in html can give custom object_name.
     template_name = 'leads/lead_detail.html'
