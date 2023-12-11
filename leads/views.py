@@ -5,6 +5,7 @@ from .forms import LeadForm, LeadUpdateForm, CustomUserCreationForm
 from leads.models import Lead
 from django.views.generic import TemplateView, ListView, DetailView, DeleteView, CreateView, UpdateView
 from django.urls import reverse
+from agents.mixins import OrganiserAndLoginRequiredMixin
 
 # Class Based Views..
 class HomePage(TemplateView):
@@ -13,14 +14,23 @@ class HomePage(TemplateView):
 class LeadListView(LoginRequiredMixin, ListView):
     template_name = 'leads/lead_list.html'
     context_object_name = 'leads' 
-    queryset = Lead.objects.all()
 
+    def get_queryset(self):
+        # Initiall queryset of leads  for the entire organisation
+        if self.request.user.is_organiser:
+            queryset = Lead.objects.filter(organisation = self.request.user.userprofile )
+        else:
+            queryset = queryset.filter(agent__user = self.request.user.agent.organisation)
+            # filtering the leads based on the agents that is logged in
+            queryset = Lead.objects.filter(agent__user = self.request.user)
+
+        return queryset
 class LeadDetailView(LoginRequiredMixin, DetailView):      #instead of specifying object_list in html can give custom object_name.
     template_name = 'leads/lead_detail.html'
     queryset = Lead.objects.all()
     context_object_name = 'lead'
 
-class LeadCreateView(LoginRequiredMixin, CreateView):
+class LeadCreateView(OrganiserAndLoginRequiredMixin, CreateView):
     template_name = 'leads/lead_create.html'
     form_class = LeadForm
 
@@ -37,14 +47,14 @@ class LeadCreateView(LoginRequiredMixin, CreateView):
         )
         return super(LeadCreateView, self).form_valid(form)
 
-class LeadUpdateView(LoginRequiredMixin, UpdateView):
+class LeadUpdateView(OrganiserAndLoginRequiredMixin, UpdateView):
     template_name = 'leads/lead_update.html'
     queryset = Lead.objects.all()
     form_class = LeadUpdateForm
 
     def get_success_url(self):
         return reverse('leads:lead-list')
-class LeadDeleteView(LoginRequiredMixin, DeleteView):
+class LeadDeleteView(OrganiserAndLoginRequiredMixin, DeleteView):
     template_name = 'leads/lead_delete.html'
     queryset = Lead.objects.all()
 

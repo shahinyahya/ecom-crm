@@ -1,12 +1,12 @@
 from typing import Any
 from django.db import models
 from django.views.generic import ListView, CreateView, DeleteView, DetailView, UpdateView
-from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse
 from leads.models import Agent 
 from .forms import AgentModelForm
+from .mixins import OrganiserAndLoginRequiredMixin          #This mixin is used when the user is authenticated and is an organiser.
 
-class AgentListView(LoginRequiredMixin, ListView):
+class AgentListView(OrganiserAndLoginRequiredMixin, ListView):
     template_name = 'agents/agent_list.html' 
     context_object_name = 'agents'
 
@@ -14,7 +14,7 @@ class AgentListView(LoginRequiredMixin, ListView):
         organistaion = self.request.user.userprofile
         return Agent.objects.filter(organistaion = organistaion)
     
-class AgentCreateView(LoginRequiredMixin, CreateView):
+class AgentCreateView(OrganiserAndLoginRequiredMixin, CreateView):
     template_name = 'agents/agent_create.html'
     form_class = AgentModelForm
 
@@ -28,7 +28,7 @@ class AgentCreateView(LoginRequiredMixin, CreateView):
         agent.save()
         return super(AgentCreateView, self).form_valid(form)        # Also to note: when you create please delete migration physically and the db and create new db if there is any conflict regarding adding default value to any models please add it.
 
-class AgentDetailView(LoginRequiredMixin, DetailView):
+class AgentDetailView(OrganiserAndLoginRequiredMixin, DetailView):
     template_name = 'agents/agent_detail.html'
     context_object_name = 'agent'
 
@@ -36,7 +36,7 @@ class AgentDetailView(LoginRequiredMixin, DetailView):
         organistaion = self.request.user.userprofile
         return Agent.objects.filter(organistaion = organistaion)
 
-class AgentUpdateView(LoginRequiredMixin, UpdateView):
+class AgentUpdateView(OrganiserAndLoginRequiredMixin, UpdateView):
     template_name = 'agents/agent_update.html'
     form_class= AgentModelForm
     
@@ -45,7 +45,7 @@ class AgentUpdateView(LoginRequiredMixin, UpdateView):
 
     def get_success_url(self):
         return reverse('agents:agent-list')   
-class AgentDeleteView(LoginRequiredMixin, DeleteView):
+class AgentDeleteView(OrganiserAndLoginRequiredMixin, DeleteView):
     template_name = 'agents/agent_delete.html'
 
     def get_queryset(self):
