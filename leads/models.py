@@ -15,7 +15,7 @@ class Lead(models.Model):
     first_name = models.CharField(max_length=25)
     last_name = models.CharField(max_length=25)
     age = models.IntegerField(default=10)
-    organistaion = models.ForeignKey(UserProfile, on_delete=models.CASCADE, default=1)
+    organisation = models.ForeignKey(UserProfile, on_delete=models.CASCADE, default=1)
     agent = models.ForeignKey("Agent", null=True, blank=True, on_delete=models.SET_NULL)
 
     def __str__(self):
@@ -23,7 +23,7 @@ class Lead(models.Model):
 
 class Agent(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    organistaion = models.ForeignKey(UserProfile, on_delete=models.CASCADE, default=1)
+    organisation = models.ForeignKey(UserProfile, on_delete=models.CASCADE, default=1)
 
     def __str__(self):
         return self.user.username
