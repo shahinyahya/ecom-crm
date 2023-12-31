@@ -17,14 +17,24 @@ class LeadListView(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         user = self.request.user
-        # Initiall queryset of leads  for the entire organisation
+        # Initial queryset of leads  for the entire organisation
         if user.is_organiser:
-            queryset = Lead.objects.filter(organisation = user.userprofile )
+            queryset = Lead.objects.filter(organisation = user.userprofile, agent__isnull = False )
         else:
-            queryset = queryset.filter(organisation = user.agent.organisation)
+            queryset = queryset.filter(organisation = user.agent.organisation, agent__isnull = False)
             # filtering the leads based on the agents that is logged in
             queryset = Lead.objects.filter(agent__user = user)
         return queryset
+    
+    def get_context_data(self, *kwargs):
+        context = super(LeadListView, self).get_context_data(*kwargs)
+        user = self.request.user
+        if user.is_organiser:
+            queryset = Lead.objects.filter(organisation = user.userprofile, agent__isnull=True)
+            context.update({
+                "unassigned_leads": queryset
+            })
+        return context
 
 class LeadDetailView(LoginRequiredMixin, DetailView):      #instead of specifying object_list in html can give custom object_name.
     template_name = 'leads/lead_detail.html'
